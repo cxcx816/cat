@@ -17,8 +17,8 @@ android.allow_backup = True
 android.permissions = INTERNET
 # 中文显示
 p4a.extra_build_args = --copy-libs
+p4a.branch = release-2024.01.21
 
 [buildozer]
 log_level = 2
 warn_on_root = 1
-p4a.branch = 2024.1.1

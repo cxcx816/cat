@@ -1,0 +1,86 @@
+================================================
+ 像素小猫 · 安卓版（Pixel Pal Android）
+================================================
+
+这是桌面版的安卓移植版，复用了同一套像素引擎和养成规则
+（喂食长肉/心情衰减/等级/串门/聊天全部一致），代码与桌面版互不影响。
+
+【文件说明】
+  main.py            入口
+  kivy_app.py        安卓界面与交互（Kivy）
+  pet_engine.py      像素引擎 + 养成逻辑（由 make_engine.py 从桌面版提取）
+  make_engine.py     桌面版更新后运行它，重新同步引擎
+  buildozer.spec     APK 打包配置
+
+【怎么得到 APK？】电脑上没法直接打包安卓 APK，两种方式任选：
+
+方式一（推荐）：GitHub 云端打包，免费，不需要装任何东西
+
+  第 1 步：注册 GitHub 账号（已有账号跳过）
+    1. 浏览器打开 https://github.com
+    2. 点右上角 Sign up，填邮箱、设密码、取用户名
+    3. 去邮箱点验证链接，完成注册
+
+  第 2 步：新建一个空仓库
+    1. 登录后，点右上角「+」号 → New repository
+    2. Repository name 填：pixelpal-android
+    3. 选 Public（公开，Actions 完全免费）
+    4. 下面所有勾选框都不用勾，直接点绿色按钮 Create repository
+
+  第 3 步：上传本文件夹全部内容（关键步骤）
+    1. 先让电脑显示隐藏文件夹：
+       文件资源管理器 → 顶部「查看」→ 勾选「隐藏的项目」
+       这样才能看到 .github 文件夹
+    2. 回到 GitHub 新仓库页面，点中间的
+       「uploading an existing file」链接
+       （如果没有，就点 Add file → Upload files）
+    3. 打开电脑文件夹 C:\Users\58169\WorkBuddy\qq\pixel-pal-android
+       全选里面所有内容（包括 .github 文件夹），
+       一起拖到浏览器的上传区域
+    4. 等待上传完（文件多，可能要几分钟）
+    5. 页面最底下 Commit changes 点一下，完成上传
+    6. 检查：仓库文件列表里能看到 .github 文件夹，
+       点进去有 workflows/build-apk.yml 就对了
+
+  第 4 步：一键构建 APK
+    1. 仓库页面顶部的标签栏，点 Actions
+    2. 左侧列表点「Build Android APK」
+    3. 右侧会提示 This workflow has a workflow_dispatch event trigger.
+       点里面的「Run workflow」按钮 → 再点绿色 Run workflow
+    4. 出现一条黄色圆点的运行记录，等 20~40 分钟
+       变成绿色 ✓ 就是打包成功（第一次会比较久）
+
+  第 5 步：下载 APK 装到手机
+    1. 点开那条绿色 ✓ 的运行记录
+    2. 拉到页面最底部「Artifacts」区域
+    3. 点 pixelpal-apk 下载压缩包
+    4. 解压得到 APK 文件
+    5. 通过微信文件传输助手 / QQ / 数据线 传到手机
+    6. 手机上点开 APK 安装，提示「未知来源」时选择允许
+    7. 装好后桌面会出现「像素小猫」图标
+
+  常见问题：
+    · Actions 标签里没有可点的 Run workflow：
+      仓库 Settings → Actions → General → 选 Allow all actions
+    · 打包失败（红色 ✗）：点进去看红色报错文字，
+      截图发我，我来修
+    · 之后桌面版更新了：把新的 pet_engine.py 同步后
+      重新上传仓库，再跑一次 Run workflow 即可
+
+方式二：本地 WSL/虚拟机打包（适合折腾党）
+  1. 安装 WSL2 Ubuntu，进入本文件夹
+  2. pip install buildozer cython==0.29.36
+  3. 按提示装好系统依赖后运行：buildozer android debug
+  4. 产物在 bin/*.apk
+
+【功能一览（与桌面版对齐）】
+  · 领养（起名/性别）、喂食/喝水 3 小时冷却、喂后 3 小时慢慢长 30g
+  · 心情 1 小时衰减；心情>60 长肉翻倍
+  · 睡觉/晒太阳 10 分钟、玩耍动作、投喂粒子、鸡汤 5 分钟一句
+  · 加好友（6 位编号）、跨电脑聊天、串门（敲门/开门/谢客/送客/回家）
+  · 30 分钟自动回家、设置卡（改名/大小/编号复制/解除好友）
+
+【注意】
+  · 安卓版存档在手机应用数据里，与电脑版各自独立
+  · 串门/聊天需要网络；中转服务与桌面版共用
+  · 桌面版与本文件夹完全独立，互不影响

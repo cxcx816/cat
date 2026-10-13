@@ -30,6 +30,7 @@ jobs:
 
       - name: Build APK
         run: |
+          cd pixel-pal-android
           yes | buildozer android debug || true
           yes | buildozer android debug
         env:
@@ -39,4 +40,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: pixelpal-apk
-          path: bin/*.apk
+          path: pixel-pal-android/bin/*.apk

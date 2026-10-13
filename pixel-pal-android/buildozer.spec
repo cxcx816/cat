@@ -21,3 +21,4 @@ p4a.extra_build_args = --copy-libs
 [buildozer]
 log_level = 2
 warn_on_root = 1
+p4a.branch = 2024.1.1

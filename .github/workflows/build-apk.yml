@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write          # 允许把日志提交回仓库，便于远程排查
     steps:
       - uses: actions/checkout@v4
 
@@ -30,13 +32,22 @@ jobs:
       - name: Build APK
         run: |
           cd pixel-pal-android
-          yes | buildozer android debug || true
-          yes | buildozer android debug
-        env:
-          BUILDOZER_ALLOW_ORPHAN: '1'
+          set -o pipefail
+          yes | buildozer -v android debug 2>&1 | tee build_log.txt || true
+          yes | buildozer -v android debug 2>&1 | tee build_log2.txt || true
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: pixelpal-apk
           path: pixel-pal-android/bin/*.apk
+
+      - name: Save build log to repo
+        if: always()
+        run: |
+          cd pixel-pal-android
+          git config user.name "build-log-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add build_log.txt build_log2.txt 2>/dev/null || true
+          git commit -m "build log [skip ci]" || true
+          git push || true

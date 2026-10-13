@@ -21,8 +21,9 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y zip unzip openjdk-17-jdk \
-            autoconf libtool pkg-config zlib1g-dev libncurses-dev \
-            cmake libffi-dev libssl-dev build-essential ccache git
+            autoconf libtool libltdl-dev pkg-config zlib1g-dev \
+            libncurses-dev cmake libffi-dev libssl-dev \
+            build-essential ccache git
 
       - name: Install buildozer
         run: |
@@ -34,7 +35,7 @@ jobs:
           cd pixel-pal-android
           set -o pipefail
           yes | buildozer -v android debug 2>&1 | tee build_log.txt || true
-          yes | buildozer -v android debug 2>&1 | tee build_log2.txt || true
+          yes | buildozer -v android debug 2>&1 | tee build_log2.txt
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
